@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -10,28 +10,27 @@ namespace VersFx.Formats.Text.Epub
 {
     public static class EpubReader
     {
-        /// <summary>
-        /// Opens the book synchronously without reading its content. Holds the handle to the EPUB file.
-        /// </summary>
-        /// <param name="filePath">path to the EPUB file</param>
-        /// <returns></returns>
-        public static EpubBookRef OpenBook(string filePath)
+		/// <summary>
+		/// Opens the book synchronously without reading its content. Holds the handle to the EPUB file.
+		/// </summary>
+		/// <param name="stream">stream from the EPUB file</param>
+		/// <returns></returns>
+		public static EpubBookRef OpenBook(Stream stream)
         {
-            return OpenBookAsync(filePath).Result;
+            return OpenBookAsync(stream).Result;
         }
 
-        /// <summary>
-        /// Opens the book asynchronously without reading its content. Holds the handle to the EPUB file.
-        /// </summary>
-        /// <param name="filePath">path to the EPUB file</param>
-        /// <returns></returns>
-        public static async Task<EpubBookRef> OpenBookAsync(string filePath)
+		/// <summary>
+		/// Opens the book asynchronously without reading its content. Holds the handle to the EPUB file.
+		/// </summary>
+		/// <param name="stream">stream from the EPUB file</param>
+		/// <returns></returns>
+		public static async Task<EpubBookRef> OpenBookAsync(Stream stream)
         {
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException("Specified epub file not found.", filePath);
-            ZipArchive epubArchive = ZipFile.OpenRead(filePath);
+            //if (!File.Exists(filePath))
+                //throw new FileNotFoundException("Specified epub file not found.", filePath);
+            ZipArchive epubArchive = new ZipArchive(stream); //ZipFile.OpenRead(filePath);
             EpubBookRef bookRef = new EpubBookRef(epubArchive);
-            bookRef.FilePath = filePath;
             bookRef.Schema = await SchemaReader.ReadSchemaAsync(epubArchive).ConfigureAwait(false);
             bookRef.Title = bookRef.Schema.Package.Metadata.Titles.FirstOrDefault() ?? String.Empty;
             bookRef.AuthorList = bookRef.Schema.Package.Metadata.Creators.Select(creator => creator.Creator).ToList();
@@ -40,27 +39,26 @@ namespace VersFx.Formats.Text.Epub
             return bookRef;
         }
 
-        /// <summary>
-        /// Opens the book synchronously and reads all of its content into the memory. Does not hold the handle to the EPUB file.
-        /// </summary>
-        /// <param name="filePath">path to the EPUB file</param>
-        /// <returns></returns>
-        public static EpubBook ReadBook(string filePath)
+		/// <summary>
+		/// Opens the book synchronously and reads all of its content into the memory. Does not hold the handle to the EPUB file.
+		/// </summary>
+		/// <param name="stream">stream from the EPUB file</param>
+		/// <returns></returns>
+		public static EpubBook ReadBook(Stream stream)
         {
-            return ReadBookAsync(filePath).Result;
+            return ReadBookAsync(stream).Result;
         }
 
-        /// <summary>
-        /// Opens the book asynchronously and reads all of its content into the memory. Does not hold the handle to the EPUB file.
-        /// </summary>
-        /// <param name="filePath">path to the EPUB file</param>
-        /// <returns></returns>
-        public static async Task<EpubBook> ReadBookAsync(string filePath)
+		/// <summary>
+		/// Opens the book asynchronously and reads all of its content into the memory. Does not hold the handle to the EPUB file.
+		/// </summary>
+		/// <param name="stream">stream from the EPUB file</param>
+		/// <returns></returns>
+		public static async Task<EpubBook> ReadBookAsync(Stream stream)
         {
             EpubBook result = new EpubBook();
-            using (EpubBookRef epubBookRef = await OpenBookAsync(filePath).ConfigureAwait(false))
+            using (EpubBookRef epubBookRef = await OpenBookAsync(stream).ConfigureAwait(false))
             {
-                result.FilePath = epubBookRef.FilePath;
                 result.Schema = epubBookRef.Schema;
                 result.Title = epubBookRef.Title;
                 result.AuthorList = epubBookRef.AuthorList;

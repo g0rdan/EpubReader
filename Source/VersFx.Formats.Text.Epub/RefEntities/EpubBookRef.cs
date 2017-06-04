@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO.Compression;
 using System.Threading.Tasks;
 using VersFx.Formats.Text.Epub.Readers;
@@ -23,7 +22,6 @@ namespace VersFx.Formats.Text.Epub
             Dispose(false);
         }
 
-        public string FilePath { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
         public List<string> AuthorList { get; set; }
@@ -38,12 +36,12 @@ namespace VersFx.Formats.Text.Epub
             }
         }
 
-        public Image ReadCover()
+        public byte[] ReadCover()
         {
             return ReadCoverAsync().Result;
         }
 
-        public async Task<Image> ReadCoverAsync()
+        public async Task<byte[]> ReadCoverAsync()
         {
             return await BookCoverReader.ReadBookCoverAsync(this).ConfigureAwait(false);
         }

@@ -1,10 +1,9 @@
-﻿using System;
+﻿﻿using System;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.XPath;
 using VersFx.Formats.Text.Epub.Utils;
 
 namespace VersFx.Formats.Text.Epub.Readers
@@ -22,8 +21,10 @@ namespace VersFx.Formats.Text.Epub.Readers
                 containerDocument = await XmlUtils.LoadDocumentAsync(containerStream).ConfigureAwait(false);
             XmlNamespaceManager xmlNamespaceManager = new XmlNamespaceManager(new NameTable());
             xmlNamespaceManager.AddNamespace("cns", "urn:oasis:names:tc:opendocument:xmlns:container");
-            XElement rootFileNode = containerDocument.XPathSelectElement("/cns:container/cns:rootfiles/cns:rootfile", xmlNamespaceManager);
-            return rootFileNode.Attribute("full-path").Value;
+            XElement rootFileNode = containerDocument.Root;
+			//TODO need investigate what I have to do there for corrent replcacing
+			// old line: XElement rootFileNode = containerDocument.Root.XPathSelectElement("/cns:container/cns:rootfiles/cns:rootfile", xmlNamespaceManager);
+			return rootFileNode.Attribute("full-path").Value;
         }
     }
 }

@@ -15,7 +15,6 @@ namespace VersFx.Formats.Text.Epub.Utils
                 memoryStream.Position = 0;
                 XmlReaderSettings xmlReaderSettings = new XmlReaderSettings
                 {
-                    XmlResolver = null,
                     DtdProcessing = DtdProcessing.Ignore,
                     Async = true
                 };

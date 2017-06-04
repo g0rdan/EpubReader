@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using VersFx.Formats.Text.Epub.Schema.Opf;
@@ -10,7 +8,7 @@ namespace VersFx.Formats.Text.Epub.Readers
 {
     internal static class BookCoverReader
     {
-        public static async Task<Image> ReadBookCoverAsync(EpubBookRef bookRef)
+        public static async Task<byte[]> ReadBookCoverAsync(EpubBookRef bookRef)
         {
             List<EpubMetadataMeta> metaItems = bookRef.Schema.Package.Metadata.MetaItems;
             if (metaItems == null || !metaItems.Any())
@@ -26,9 +24,7 @@ namespace VersFx.Formats.Text.Epub.Readers
             EpubByteContentFileRef coverImageContentFileRef;
             if (!bookRef.Content.Images.TryGetValue(coverManifestItem.Href, out coverImageContentFileRef))
                 throw new Exception(String.Format("Incorrect EPUB manifest: item with href = \"{0}\" is missing.", coverManifestItem.Href));
-            byte[] coverImageContent = await coverImageContentFileRef.ReadContentAsBytesAsync().ConfigureAwait(false);
-            using (MemoryStream coverImageStream = new MemoryStream(coverImageContent))
-                return await Task.Run(() => Image.FromStream(coverImageStream)).ConfigureAwait(false);
+            return await coverImageContentFileRef.ReadContentAsBytesAsync().ConfigureAwait(false);
         }
     }
 }

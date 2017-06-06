@@ -19,6 +19,10 @@
     <PackageVersion>1.0.3</PackageVersion>
     <Authors>versfx, g0rdan</Authors>
     <Description>The port of origin EpubReader library for PCL projects</Description>
+    <NeutralLanguage>es-US</NeutralLanguage>
+    <PackageProjectUrl>https://github.com/g0rdan/EpubReader.Cross</PackageProjectUrl>
+    <PackageTags>epub, epub-reader, pcl, pcl-library</PackageTags>
+    <Title>EpubReader.Cross</Title>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

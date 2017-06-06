@@ -57,7 +57,7 @@
   <ItemGroup>
     <ProjectReference Include="..\VersFx.Formats.Text.Epub\VersFx.Formats.Text.Epub.csproj">
       <Project>{313e44f0-4bc2-4a4f-b24b-c29d8ffb7c4e}</Project>
-      <Name>VersFx.Formats.Text.Epub</Name>
+      <Name>EpubReader.Cross</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

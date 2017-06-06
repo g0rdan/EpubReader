@@ -27,9 +27,7 @@ namespace VersFx.Formats.Text.Epub
 		/// <returns></returns>
 		public static async Task<EpubBookRef> OpenBookAsync(Stream stream)
         {
-            //if (!File.Exists(filePath))
-                //throw new FileNotFoundException("Specified epub file not found.", filePath);
-            ZipArchive epubArchive = new ZipArchive(stream); //ZipFile.OpenRead(filePath);
+            ZipArchive epubArchive = new ZipArchive(stream);
             EpubBookRef bookRef = new EpubBookRef(epubArchive);
             bookRef.Schema = await SchemaReader.ReadSchemaAsync(epubArchive).ConfigureAwait(false);
             bookRef.Title = bookRef.Schema.Package.Metadata.Titles.FirstOrDefault() ?? String.Empty;

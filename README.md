@@ -4,7 +4,8 @@
 ## Example
 ```csharp
 // Opens a book and reads all of its content into the memory
-EpubBook epubBook = EpubReader.ReadBook("alice_in_wonderland.epub");
+FileStream fs = File.Open("alice_in_wonderland.epub", FileMode.Open)
+EpubBook epubBook = EpubReader.ReadBook(fs);
 
             
 // COMMON PROPERTIES

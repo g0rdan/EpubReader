@@ -20,7 +20,7 @@ string author = epubBook.Author;
 List<string> authors = epubBook.AuthorList;
 
 // Book's cover image (null if there is no cover)
-Image coverImage = epubBook.CoverImage;
+byte[] coverImage = epubBook.CoverImage;
 
             
 // CHAPTERS

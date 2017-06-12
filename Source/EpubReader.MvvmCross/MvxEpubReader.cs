@@ -7,14 +7,14 @@ using EbupVanilla = VersFx.Formats.Text.Epub;
 
 namespace EpubReader.MvvmCross
 {
-	public static class EpubReader
+	public class MvxEpubReader : IMvxEpubReader
 	{
 		/// <summary>
 		/// Opens the book synchronously without reading its content. Holds the handle to the EPUB file.
 		/// </summary>
 		/// <param name="stream">stream from the EPUB file</param>
 		/// <returns></returns>
-		public static EbupVanilla.EpubBookRef OpenBook(Stream stream)
+		public EbupVanilla.EpubBookRef OpenBook(Stream stream)
 		{
             return EbupVanilla.EpubReader.OpenBook(stream);
 		}
@@ -24,7 +24,7 @@ namespace EpubReader.MvvmCross
 		/// </summary>
 		/// <param name="path">path to the EPUB file</param>
 		/// <returns></returns>
-		public static EbupVanilla.EpubBookRef OpenBook(string path)
+		public EbupVanilla.EpubBookRef OpenBook(string path)
 		{
             using(var stream = Mvx.Resolve<IMvxFileStore>().OpenRead(path))
             {
@@ -37,7 +37,7 @@ namespace EpubReader.MvvmCross
 		/// </summary>
 		/// <param name="stream">stream from the EPUB file</param>
 		/// <returns></returns>
-		public static async Task<EbupVanilla.EpubBookRef> OpenBookAsync(Stream stream)
+		public async Task<EbupVanilla.EpubBookRef> OpenBookAsync(Stream stream)
 		{
             return await EbupVanilla.EpubReader.OpenBookAsync(stream).ConfigureAwait(false);
 		}
@@ -47,7 +47,7 @@ namespace EpubReader.MvvmCross
 		/// </summary>
 		/// <param name="path">path to the EPUB file</param>
 		/// <returns></returns>
-		public static Task<EbupVanilla.EpubBookRef> OpenBookAsync(string path)
+		public Task<EbupVanilla.EpubBookRef> OpenBookAsync(string path)
 		{
 			using (var stream = Mvx.Resolve<IMvxFileStore>().OpenRead(path))
 			{
@@ -60,7 +60,7 @@ namespace EpubReader.MvvmCross
 		/// </summary>
 		/// <param name="stream">stream from the EPUB file</param>
 		/// <returns></returns>
-		public static EbupVanilla.EpubBook ReadBook(Stream stream)
+		public EbupVanilla.EpubBook ReadBook(Stream stream)
 		{
             return EbupVanilla.EpubReader.ReadBook(stream);
 		}
@@ -70,7 +70,7 @@ namespace EpubReader.MvvmCross
 		/// </summary>
 		/// <param name="path">path to the EPUB file</param>
 		/// <returns></returns>
-		public static EbupVanilla.EpubBook ReadBook(string path)
+		public EbupVanilla.EpubBook ReadBook(string path)
 		{
 			using (var stream = Mvx.Resolve<IMvxFileStore>().OpenRead(path))
 			{
@@ -83,7 +83,7 @@ namespace EpubReader.MvvmCross
 		/// </summary>
 		/// <param name="stream">stream from the EPUB file</param>
 		/// <returns></returns>
-		public static async Task<EbupVanilla.EpubBook> ReadBookAsync(Stream stream)
+		public async Task<EbupVanilla.EpubBook> ReadBookAsync(Stream stream)
 		{
 			return await EbupVanilla.EpubReader.ReadBookAsync(stream).ConfigureAwait(false);
 		}
@@ -93,7 +93,7 @@ namespace EpubReader.MvvmCross
 		/// </summary>
 		/// <param name="path">path to the EPUB file</param>
 		/// <returns></returns>
-		public static Task<EbupVanilla.EpubBook> ReadBookAsync(string path)
+		public Task<EbupVanilla.EpubBook> ReadBookAsync(string path)
 		{
 			using (var stream = Mvx.Resolve<IMvxFileStore>().OpenRead(path))
 			{

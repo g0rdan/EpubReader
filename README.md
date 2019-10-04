@@ -1,3 +1,5 @@
+## NOTE: The project is deprecated cause parent [repo](https://github.com/vers-one/EpubReader) already supports .NET Standart and this one is not going to be maintained.
+
 # EpubReader
 .NET library for reading EPUB files
 
